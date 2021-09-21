@@ -15,3 +15,12 @@
 #### 기술 스택
 
 ![화면 캡처 2021-09-22 004511](https://user-images.githubusercontent.com/62214428/134203269-5120ac49-57af-4903-b4a4-99a950037cc6.png)
+
+
+----------
+
+#### 실행 방법
+- `도커 엔진 설치 필수`
+- 해당 repo `git clone`
+- docker-compose.yml이 위치한 폴더에서 `sudo docker-compose up`
+- `localhost:8080` 접근
