@@ -13,7 +13,7 @@ RUN ./gradlew bootjar
 
 
 
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11-jre-slim
 # 위에서 빌드한 jar 파일을 실행해 주기 위해 다시 JDK 1.8 버전을 베이스로 설정합니다.
 
 COPY --from=builder build/libs/*.jar bithumb-0.0.1-SNAPSHOT.jar
