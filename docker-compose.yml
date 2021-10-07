@@ -2,7 +2,7 @@ version: "3.9"
 services:
   application:
     container_name: bithumbApp
-    build: .
+    build: src/main/docker
     ports:
       - "8080:8080"
     restart: always
