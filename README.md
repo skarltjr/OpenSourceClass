@@ -32,3 +32,8 @@
 - docker-compose.yml이 위치한 폴더에서 `sudo docker-compose up`
 - 사용 ex) `localhost:8080/BTC/KRW`  
 - localhost:8080/코인이름/통화
+
+참고
+Link: [Bithum][BithumLink]
+
+[BithumLink]: https://apidocs.bithumb.com/
