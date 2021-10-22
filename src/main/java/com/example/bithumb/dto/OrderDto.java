@@ -1,4 +1,4 @@
-package com.example.bithumb;
+package com.example.bithumb.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
