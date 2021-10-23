@@ -15,8 +15,9 @@
 
 
 #### 개요
+![화면 캡처 2021-10-23 142210](https://user-images.githubusercontent.com/62214428/138543569-a11db833-9c59-42e2-8a74-d0516fc61b0c.png)
 
-![화면 캡처 2021-10-08 171301](https://user-images.githubusercontent.com/62214428/136522518-db566958-6599-4fd3-ae9c-f61898b74ffd.png)
+
 
 ----------------
 
@@ -31,7 +32,6 @@
 - `도커 엔진 설치 필수`
 - 해당 repo `git clone`
 - docker-compose.yml이 위치한 폴더에서 `sudo docker-compose up`
-- 사용 ex) `localhost:8080/BTC/KRW`  
 - localhost:8080/코인이름/통화
 
 참고
