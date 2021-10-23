@@ -32,7 +32,6 @@
 - `도커 엔진 설치 필수`
 - 해당 repo `git clone`
 - docker-compose.yml이 위치한 폴더에서 `sudo docker-compose up`
-- localhost:8080/코인이름/통화
 
 참고
 Link: [Bithum][BithumLink]
