@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class BitService {
             Wallet wallet = walletRepository.findById(id).get();
             wallet.setBase(wallet.getBase() + invest);
             wallet.setCurrent(wallet.getCurrent() + invest);
+            String changed = getCurrent(wallet.getCoin(), "KRW").getData().getMax_price();
+            wallet.setLastPrice(Long.parseLong(changed));
             Wallet save = walletRepository.save(wallet);
 
             WalletResponse res = new WalletResponse();
@@ -104,7 +107,15 @@ public class BitService {
     private long computeCurrentValue(Wallet wallet) {
         String getCurrentPrice = getCurrent(wallet.getCoin(),"KRW").getData().getMax_price();
         int current = Integer.parseInt(getCurrentPrice);
-        double percentage = current / wallet.getLastPrice();
+
+        /** 가장 주요 로직 변경 폭을 구해야한다
+         * 원래 변경 폭이 10.123%라면
+         * 10.12 소숫점아래 2자리까지만 반영하기
+         * */
+        double originPercentage = ((double)current / wallet.getLastPrice());
+        DecimalFormat form = new DecimalFormat("#.##");
+        String format = form.format(originPercentage);
+        float percentage = Float.parseFloat(format);
 
         long now = (long) (wallet.getBase() * percentage);
         return now;

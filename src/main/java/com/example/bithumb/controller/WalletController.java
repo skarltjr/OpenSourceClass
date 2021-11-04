@@ -5,7 +5,6 @@ import com.example.bithumb.dto.WalletCreated;
 import com.example.bithumb.dto.WalletForm;
 import com.example.bithumb.dto.WalletResponse;
 import com.example.bithumb.service.BitService;
-import com.example.bithumb.wallet.Wallet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
