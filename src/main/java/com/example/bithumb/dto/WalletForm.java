@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Invest {
+public class WalletForm {
+    private String walletName;
     private String coin;
-    private int base;
+    private long base;
 }

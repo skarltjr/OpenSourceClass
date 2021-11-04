@@ -1,8 +1,6 @@
 package com.example.bithumb.service;
 
-import com.example.bithumb.dto.Data;
-import com.example.bithumb.dto.Invest;
-import com.example.bithumb.dto.OrderDto;
+import com.example.bithumb.dto.*;
 import com.example.bithumb.repository.WalletRepository;
 import com.example.bithumb.wallet.Wallet;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -24,41 +25,52 @@ public class BitService {
     private static final String bithumbURI = "https://api.bithumb.com/public/ticker/";
 
 
-    public Wallet initialInvest(Invest invest) {
-        int base = invest.getBase();
-        OrderDto coin = getCoin(invest.getCoin());
-        int price = Integer.parseInt(coin.getData().getMax_price());
-
+    public WalletCreated createWallet(WalletForm form) {
+        String max_price = getCurrent(form.getCoin(),"KRW").getData().getMax_price();
+        long price = Long.parseLong(max_price);
         Wallet wallet = Wallet.builder()
-                .coin(invest.getCoin())
-                .base(base)
-                .current(base)
+                .coin(form.getCoin())
+                .base(form.getBase())
+                .walletName(form.getWalletName())
+                .current(form.getBase())
                 .lastPrice(price)
                 .build();
-
-        return walletRepository.save(wallet);
+        Wallet save = walletRepository.save(wallet);
+        return new WalletCreated(save);
     }
 
-
-    public Wallet getMyWallet(Long id) {
+    public WalletResponse getMyWallet(Long id) {
         if (walletRepository.existsById(id)) {
             Wallet wallet = walletRepository.findById(id).get();
-            int now = computeCurrentValue(wallet);
+            long now = computeCurrentValue(wallet);
             wallet.setCurrent(now);
-            return wallet;
+
+            WalletResponse res = new WalletResponse();
+            res.setBase(wallet.getBase());
+            res.setWalletName(wallet.getWalletName());
+            res.setCoin(wallet.getCoin());
+            res.setCurrentPrice(wallet.getCurrent());
+            return res;
         } else {
             return null;
         }
     }
 
-    public Wallet addMoney(Long id, int money) {
+    public WalletResponse invest(Long id, long invest) {
         if (!walletRepository.existsById(id)) {
             return null;
         } else {
             Wallet wallet = walletRepository.findById(id).get();
-            wallet.setBase(wallet.getBase() + money);
-            wallet.setCurrent(wallet.getCurrent() + money);
-            return wallet;
+            wallet.setBase(wallet.getBase() + invest);
+            wallet.setCurrent(wallet.getCurrent() + invest);
+            Wallet save = walletRepository.save(wallet);
+
+            WalletResponse res = new WalletResponse();
+            res.setBase(wallet.getBase());
+            res.setWalletName(wallet.getWalletName());
+            res.setCoin(wallet.getCoin());
+            res.setCurrentPrice(wallet.getCurrent());
+            return res;
         }
     }
 
@@ -71,10 +83,8 @@ public class BitService {
         }
     }
 
-
     public OrderDto getCurrent(String bitKinds, String current) {
         String kinds = bitKinds;
-        String selectedCurrent = current;
 
         String targetUri = bithumbURI + kinds + "_" + current;
         //UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(targetUri);
@@ -91,25 +101,27 @@ public class BitService {
         return result.getData();
     }
 
-    private OrderDto getCoin(String coin) {
-        String kinds = coin;
-        String current = "KRW";
-        String targetUri = bithumbURI + kinds + "_" + current;
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-        httpHeaders.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-
-        HttpEntity<?> httpEntity = new HttpEntity<>(httpHeaders);
-        return restTemplate.exchange(targetUri, HttpMethod.GET, httpEntity, OrderDto.class).getBody();
-    }
-
-    private int computeCurrentValue(Wallet wallet) {
-        String getCurrentPrice = getCoin(wallet.getCoin()).getData().getMax_price();
+    private long computeCurrentValue(Wallet wallet) {
+        String getCurrentPrice = getCurrent(wallet.getCoin(),"KRW").getData().getMax_price();
         int current = Integer.parseInt(getCurrentPrice);
         double percentage = current / wallet.getLastPrice();
 
-        int now = (int) (wallet.getCurrent() * percentage);
+        long now = (long) (wallet.getBase() * percentage);
         return now;
+    }
+
+    public List<Data> getAll() {
+        String current = "KRW";
+        String[] str = {"BTC", "ETH", "XRP", "DOGE", "ADA"};
+        List<OrderDto> list = new ArrayList<>();
+        List<Data> result = new ArrayList<>();
+        for (int i = 0; i < str.length; i++) {
+            OrderDto coin = getCurrent(str[i], current);
+            list.add(coin);
+            result.add(computeTerm(coin));
+        }
+
+        //todo 결과에 코인 정보는 있는데 코인 이름이 없음 dto새로만들기
+        return result;
     }
 }
