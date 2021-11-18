@@ -26,7 +26,7 @@ public class BitService {
     private static final String bithumbURI = "https://api.bithumb.com/public/ticker/";
 
 
-    public WalletCreated createWallet(WalletForm form) {
+    public void createWallet(WalletForm form) {
         String max_price = getCurrent(form.getCoin(),"KRW").getData().getMax_price();
         long price = Long.parseLong(max_price);
         Wallet wallet = Wallet.builder()
@@ -36,8 +36,7 @@ public class BitService {
                 .current(form.getBase())
                 .lastPrice(price)
                 .build();
-        Wallet save = walletRepository.save(wallet);
-        return new WalletCreated(save);
+       walletRepository.save(wallet);
     }
 
     public WalletResponse getMyWallet(Long id) {
@@ -57,7 +56,8 @@ public class BitService {
         }
     }
 
-    public WalletResponse invest(Long id, long invest) {
+    public WalletResponse invest(Long id, InvestForm form) {
+        long invest = form.getInvest();
         if (!walletRepository.existsById(id)) {
             return null;
         } else {
@@ -134,5 +134,10 @@ public class BitService {
 
         //todo 결과에 코인 정보는 있는데 코인 이름이 없음 dto새로만들기
         return result;
+    }
+
+    public List<Wallet> getMyWalletAll() {
+        List<Wallet> myWallets = walletRepository.findAll();
+        return myWallets;
     }
 }

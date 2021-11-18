@@ -1,3 +1,4 @@
+/*
 package com.example.bithumb.controller;
 
 import com.example.bithumb.dto.WalletCreated;
@@ -108,10 +109,12 @@ class WalletControllerTest {
         wallet1.setLastPrice(50000000);
         Wallet saved = repository.save(wallet1);
 
-        /** 가장 주요 로직 변경 폭을 구해야한다
+        */
+/** 가장 주요 로직 변경 폭을 구해야한다
          * 원래 변경 폭이 10.123%라면
          * 10.12% 소숫점아래 2자리까지만 반영하기
-         * */
+         * *//*
+
         long currentPrice = Long.parseLong(service.getCurrent("BTC", "KRW").getData().getMax_price());
         double originPercentage = ((double)currentPrice / 50000000);
 
@@ -132,4 +135,4 @@ class WalletControllerTest {
         walletForm.setCoin("BTC");
         return walletForm;
     }
-}
+}*/

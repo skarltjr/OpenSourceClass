@@ -1,42 +1,55 @@
 package com.example.bithumb.controller;
 
 
-import com.example.bithumb.dto.WalletCreated;
+
+import com.example.bithumb.dto.InvestForm;
 import com.example.bithumb.dto.WalletForm;
 import com.example.bithumb.dto.WalletResponse;
 import com.example.bithumb.service.BitService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class WalletController {
     private final BitService bitService;
 
-    // 나중에 rest api -> mvc로 변경할 것
-    @PostMapping("/wallet")
-    public ResponseEntity createWallet(@RequestBody WalletForm form) {
-        WalletCreated result = bitService.createWallet(form);
-        return ResponseEntity.ok(result);
+    //todo rest api -> thymeleaf 적용밤면으로 변경 중
+    @GetMapping("/create/wallet")
+    public String walletForm(Model model) {
+        model.addAttribute("walletForm", new WalletForm());
+        return "wallet/create";
+    }
+
+    @PostMapping("/create/wallet")
+    public String createWallet(@ModelAttribute WalletForm form) {
+        bitService.createWallet(form);
+        return "redirect:/";
     }
 
     @GetMapping("/wallet/{id}")
-    public ResponseEntity getWallet(@PathVariable Long id) {
+    public String getWallet(@PathVariable Long id, Model model) {
         WalletResponse myWallet = bitService.getMyWallet(id);
-        return ResponseEntity.ok(myWallet);
+        model.addAttribute("myWallet", myWallet);
+        model.addAttribute("invest", new InvestForm());
+        return "wallet/get";
     }
 
     @PostMapping("/invest/{id}")
-    public ResponseEntity invest(@PathVariable Long id, @RequestParam long invest) {
-        WalletResponse res = bitService.invest(id, invest);
-        return ResponseEntity.ok(res);
+    public String invest(@PathVariable Long id,@ModelAttribute InvestForm form) {
+        WalletResponse res = bitService.invest(id,form);
+        return "redirect:/wallet/get/" + id;
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity deleteWallet(@PathVariable Long id) {
+    public String deleteWallet(@PathVariable Long id) {
         Long result = bitService.removeWallet(id);
-        return ResponseEntity.ok(result);
+        if (result == null) {
+            return "error/error";
+        }
+        return "redirect:/";
     }
 
 }
