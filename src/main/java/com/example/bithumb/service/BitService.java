@@ -121,15 +121,25 @@ public class BitService {
         return now;
     }
 
-    public List<Data> getAll() {
+    public List<Result> getAll() {
         String current = "KRW";
         String[] str = {"BTC", "ETH", "XRP", "DOGE", "ADA"};
         List<OrderDto> list = new ArrayList<>();
-        List<Data> result = new ArrayList<>();
+        List<Result> result = new ArrayList<>();
         for (int i = 0; i < str.length; i++) {
             OrderDto coin = getCurrent(str[i], current);
             list.add(coin);
-            result.add(computeTerm(coin));
+            Data data = computeTerm(coin);
+            Result res = new Result();
+            res.setCoin(str[i]);
+            res.setMax_price(data.getMax_price());
+
+            DecimalFormat form = new DecimalFormat("#.##");
+            double traded = Double.parseDouble(data.getUnits_traded_24H());
+            String format = form.format(traded);
+            res.setUnits_traded_24H(format);
+            res.setFluctate_rate_24H(data.getFluctate_rate_24H());
+            result.add(res);
         }
 
         //todo 결과에 코인 정보는 있는데 코인 이름이 없음 dto새로만들기

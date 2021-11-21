@@ -26,7 +26,7 @@ public class WalletController {
     @PostMapping("/create/wallet")
     public String createWallet(@ModelAttribute WalletForm form) {
         bitService.createWallet(form);
-        return "redirect:/";
+        return "redirect:/index";
     }
 
     @GetMapping("/wallet/{id}")
