@@ -15,4 +15,34 @@
         <small style="font-size: 25px">모두 모투</small>
     </div>
 
+    <div th:each="coin: ${coins}">
+        <div>
+            <h4 th:text="${coin.coin}"></h4>
+            <p style="display: inline-block">고가 : </p>
+            <p style="display: inline-block" th:text="${coin.max_price}"></p>
+
+            <p style="display: inline-block">거래량 : </p>
+            <p style="display: inline-block" th:text="${coin.units_traded_24H}"></p>
+
+            <p style="display: inline-block">변동률 : </p>
+            <p style="display: inline-block" th:text="${coin.fluctate_rate_24H}"></p>
+        </div>
+    </div>
+
+    <button>
+        <a th:href="@{/create/wallet}">지갑 생성하기</a>
+    </button>
+
+    <h4>내 지갑 리스트</h4>
+    <div th:each="wallet:${myWallets}">
+        <div>
+            <p style="display: inline-block"> 지갑명 : </p>
+            <p style="display: inline-block" th:text="${wallet.walletName}"></p>
+            <p style="display: inline-block"> 코인 : </p>
+            <p style="display: inline-block" th:text="${wallet.coin}"></p>
+            <p style="display: inline-block"> 현재 금액 : </p>
+            <p style="display: inline-block" th:text="${wallet.current}"></p>
+        </div>
+    </div>
+
 </html>
