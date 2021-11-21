@@ -40,7 +40,7 @@ public class WalletController {
     @PostMapping("/invest/{id}")
     public String invest(@PathVariable Long id,@ModelAttribute InvestForm form) {
         WalletResponse res = bitService.invest(id,form);
-        return "redirect:/wallet/get/" + id;
+        return "redirect:/wallet/" + id;
     }
 
     @PostMapping("/delete/{id}")

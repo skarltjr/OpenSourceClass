@@ -46,6 +46,7 @@ public class BitService {
             wallet.setCurrent(now);
 
             WalletResponse res = new WalletResponse();
+            res.setId(id);
             res.setBase(wallet.getBase());
             res.setWalletName(wallet.getWalletName());
             res.setCoin(wallet.getCoin());
