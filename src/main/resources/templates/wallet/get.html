@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http//www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>모두 모투</title>
+</head>
+
+<div>
+    <a href="/index" th:href="@{/index}">
+        <img src="/images/wallet.png"width="60" height="40">
+    </a>
+    <small style="font-size: 25px">지갑 확인</small>
+</div>
+<div>
+    <h4 th:text="${myWallet.walletName}"></h4>
+    <p>
+        <small>코인 종류: </small>
+        <a th:text="${myWallet.coin}"></a>
+    </p>
+    <p>
+        <small>투자금: </small>
+        <a th:text="${myWallet.base}"></a>
+    </p>
+    <p>
+        <small>현재 금액: </small>
+        <a th:text="${myWallet.currentPrice}"></a>
+    </p>
+</div>
+
+<div>
+    <h4>추가 투자하기</h4>
+    <form th:action="@{'/invest/'+${myWallet.id}}" th:object="${invest}" method="post">
+        <div>
+            <label for="invest">추가 투자금 : </label>
+            <input id="invest" type="number" th:field="*{invest}" placeholder="10000">
+        </div>
+        <div class="form-group">
+            <button type="submit">추가 투자하기</button>
+        </div>
+    </form>
+</div>
+</html>

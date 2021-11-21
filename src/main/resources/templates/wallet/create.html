@@ -7,10 +7,12 @@
     <title>모두 모투</title>
 </head>
 
-    <div>
+<div>
+    <a href="/index" th:href="@{/index}">
         <img src="/images/wallet.png"width="60" height="40">
-        <small style="font-size: 25px">지갑 생성</small>
-    </div>
+    </a>
+    <small style="font-size: 25px">지갑 확인</small>
+</div>
     <div>
         <form th:action="@{/create/wallet}" th:object="${walletForm}" method="post">
             <div>
