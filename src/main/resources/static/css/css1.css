@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+.screen {
+    width: 400px;
+    height: 800px;
+    margin-top: 50px;
+    margin-left: 550px;
+    border-radius: 60px;
+    border: 1px solid #767676;
+    box-shadow: 0 18px 100px -18px rgba(0, 0, 0, 0.3);
+}
+.header {
+    margin: 0px 30px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0.7;
+}
+.Rec {
+    font-size: 20px;
+    font-weight: 600;
+}
+.popular {
+    margin: 0px 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.popular__text {
+    font-weight: 600;
+    opacity: 0.8;
+    font-size: 16px;
+}
+.view-text {
+    color: red;
+    font-weight: 600;
+    font-size: 12px;
+    opacity: 0.8;
+}
+.main {
+    margin: 0px 30px;
+}
+.main__upper {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.other {
+    font-weight: 600;
+    margin-left: 30px;
+    opacity: 0.8;
+    margin-top: 20px;
+}
+.menu-box {
+    margin: 30px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 340px;
+    height: 60px;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 18px 36px -18px rgba(0, 0, 0, 0.3),
+    0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+    background-color: white;
+    border-radius: 30px;
+}
+
+.text-a {
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+.text-b {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.5;
+    margin-top: 3px;
+}
+
+.fa-home {
+    font-size: 20px;
+}
+.fa-hard-hat {
+    font-size: 20px;
+    color: red;
+}
+.fa-edit {
+    font-size: 20px;
+}
+.fa-sticky-note {
+    font-size: 20px;
+}
+.subject {
+    border: 1px blue;
+    display: inline-block;
+    margin-left: 30px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+.top {
+    margin-top: 30px;
+}
+.input {
+    margin-right: 15px;
+}
+.form-group {
+    margin-top: 100px;
+    margin-left: 150px;
+}
+.create-button {
+    width: 100px;
+    height: 60px;
+    background: bisque;
+    border-radius: 10px;
+}
+.go-main {
+    margin-top: 100px;
+    margin-left: 120px;
+}
