@@ -28,6 +28,10 @@ public class BitService {
 
     public void createWallet(WalletForm form) {
         String max_price = getCurrent(form.getCoin(),"KRW").getData().getMax_price();
+        if (max_price.contains(".")) {
+            String[] split = max_price.split("\\.");
+            max_price = split[0];
+        }
         long price = Long.parseLong(max_price);
         Wallet wallet = Wallet.builder()
                 .coin(form.getCoin())
@@ -66,6 +70,10 @@ public class BitService {
             wallet.setBase(wallet.getBase() + invest);
             wallet.setCurrent(wallet.getCurrent() + invest);
             String changed = getCurrent(wallet.getCoin(), "KRW").getData().getMax_price();
+            if (changed.contains(".")) {
+                String[] split = changed.split("\\.");
+                changed = split[0];
+            }
             wallet.setLastPrice(Long.parseLong(changed));
             Wallet save = walletRepository.save(wallet);
 
@@ -107,6 +115,10 @@ public class BitService {
 
     private long computeCurrentValue(Wallet wallet) {
         String getCurrentPrice = getCurrent(wallet.getCoin(),"KRW").getData().getMax_price();
+        if (getCurrentPrice.contains(".")) {
+            String[] split = getCurrentPrice.split("\\.");
+            getCurrentPrice = split[0];
+        }
         int current = Integer.parseInt(getCurrentPrice);
 
         /** 가장 주요 로직 변경 폭을 구해야한다
