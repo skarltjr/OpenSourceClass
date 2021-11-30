@@ -111,10 +111,28 @@
             padding-top:20px;
             padding-bottom:20px;
         }
+        .table1 {
+            width: 700px;
+            float: left;
+            display: inline-block;
+            margin-top: -60px;
+            margin-left: 350px;
+        }
+        .table2 {
+            float: right;
+            width: 600px;
+            display: inline-block;
+            margin-top: -200px;
+            margin-right: 690px;
+        }
         .table2 tbody td {
             text-align:center;
             padding-top:25px;
         }
+        .table2-tr > td {
+            background-color:rgba(247, 246, 243, 0.8);
+        }
+
     </style>
 </head>
 <body>
@@ -123,7 +141,28 @@
 </div>
     <div class="box">
         <p class="main_Title">MOTU</p>
+        <div class="table2">
+            <table class="coin-icon">
+                <tr>
+                    <th>지갑명</th>
+                    <th>코인</th>
+                    <th>현재 금액</th>
+                    <th>확인</th>
+                </tr>
+                <tr class="table2-tr" th:each="wallet:${myWallets}">
+                    <td th:text="${wallet.walletName}"></td>
+                    <td th:text="${wallet.coin}"></td>
+                    <td th:text="${wallet.current}"></td>
+                    <td>
+                        <button>
+                            <a th:href="@{'/wallet/'+${wallet.id}}">지갑 확인</a>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
+
     <div class="table1" >
         <table class="coin-icon">
             <tr>
@@ -137,26 +176,6 @@
                 <td th:text="${coin.max_price}"></td>
                 <td th:text="${coin.units_traded_24H}"></td>
                 <td th:text="${coin.fluctate_rate_24H}"></td>
-            </tr>
-        </table>
-    </div>
-    <div class="table2">
-        <table class="coin-icon">
-            <tr>
-                <th>지갑명</th>
-                <th>코인</th>
-                <th>현재 금액(원)</th>
-                <th>확인</th>
-            </tr>
-            <tr th:each="wallet:${myWallets}">
-                <td th:text="${wallet.walletName}"></td>
-                <td th:text="${wallet.coin}"></td>
-                <td th:text="${wallet.current}"></td>
-                <td>
-                    <button>
-                        <a th:href="@{'/wallet/'+${wallet.id}}">지갑 확인</a>
-                    </button>
-                </td>
             </tr>
         </table>
     </div>
