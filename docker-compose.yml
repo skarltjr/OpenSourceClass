@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  application:
+    container_name: bithumbApp
+    build: .
+    ports:
+      - "8080:8080"
+    restart: always
