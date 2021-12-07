@@ -31,8 +31,7 @@
 
 #### 실행 방법
 - `도커 엔진 설치 필수`
-- 해당 repo `git clone`
-- docker-compose.yml이 위치한 폴더에서 `sudo docker-compose up`
+- https://hub.docker.com/repository/docker/skarltjr/open-source-class에서 이미지 풀받아서 run
 
 참고
 Link: [Bithum][BithumLink]
